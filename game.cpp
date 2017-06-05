@@ -19,15 +19,16 @@ Game::Game()
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-    Grid grid(numberOfRows, numberOfCols, sizeOfField, padding, m_scene);
-    grid.setRect(padding, padding, grid.getWidth(), grid.getHeight());
-    m_scene->addItem(&grid);
-    grid.paint();
+    m_grid.init(numberOfRows, numberOfCols, sizeOfField, padding, m_scene);
+    m_grid.setRect(padding, padding, m_grid.getWidth(), m_grid.getHeight());
+    m_scene->addItem(&m_grid);
+    m_grid.paint();
 }
 
 void Game::mousePressEvent(QMouseEvent *event)
 {
-    qDebug() << "Click!";
+    qDebug() << event->pos();
+    qDebug() << m_grid.getClickedRowIdx(event->pos());
 }
 
 int Game::calculateWindowSize(int numberOfFields, int sizeOfField, int padding)

@@ -3,11 +3,14 @@
 
 #include <QGraphicsView>
 #include <QMouseEvent>
+#include "grid.h"
 
 class Game : public QGraphicsView
 {
 public:
     QGraphicsScene *m_scene;
+
+    Grid m_grid;
 
     Game();
 

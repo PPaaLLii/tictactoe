@@ -15,20 +15,20 @@ private:
     QGraphicsScene* m_scene;
 
 public:
-    Grid(int numberOfRows, int numberOfCols, int sizeOfField, int padding, QGraphicsScene* scene) :
-        m_numberOfRows{ numberOfRows },
-        m_numberOfCols{ numberOfCols },
-        m_sizeOfField{ sizeOfField },
-        m_padding{ padding },
-        m_scene{ scene }
-    {
-    }
+
+    void init(int numberOfRows, int numberOfCols, int sizeOfField, int padding, QGraphicsScene* scene);
 
     int getWidth();
 
     int getHeight();
 
     void paint();
+
+    bool isInGrid(const QPoint &point);
+
+    int getClickedRowIdx(const QPoint &point);
+
+    int getClickedColIdx(const QPoint &point);
 };
 
 #endif // GRID_H
