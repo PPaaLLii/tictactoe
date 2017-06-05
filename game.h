@@ -8,16 +8,23 @@
 class Game : public QGraphicsView
 {
 public:
-    QGraphicsScene *m_scene;
+    Game();
 
+private:
     Grid m_grid;
 
-    Game();
+    QGraphicsScene *m_scene;
 
     void mousePressEvent(QMouseEvent *event);
 
-private:
     int calculateWindowSize(int numberOfFields, int sizeOfField, int padding);
+
+    bool isValidMove(int row, int col);
+
+    // cross = 1 && circle = 0;
+    bool m_nextMove = 1;
+
+    std::vector<std::vector<int>> m_board;
 };
 
 #endif // GAME_H

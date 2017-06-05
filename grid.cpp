@@ -2,12 +2,13 @@
 #include <QDebug>
 #include <QPoint>
 
-void Grid::init(int numberOfRows, int numberOfCols, int sizeOfField, int padding, QGraphicsScene *scene)
+void Grid::init(int numberOfRows, int numberOfCols, int sizeOfField, int padding,int innerPadding, QGraphicsScene *scene)
 {
     m_numberOfRows = numberOfRows;
     m_numberOfCols = numberOfCols;
     m_sizeOfField = sizeOfField;
     m_padding = padding;
+    m_innerPadding = innerPadding;
     m_scene = scene;
 }
 
@@ -44,15 +45,6 @@ void Grid::paint()
     }
 }
 
-bool Grid::isInGrid(const QPoint &point)
-{
-    int x = point.x();
-    int y = point.y();
-
-    return (x > (m_padding + 1)) && (x < (m_padding + m_numberOfCols * m_sizeOfField + m_numberOfCols))
-            && (y > (m_padding + 1)) && (y < (m_padding + m_numberOfRows * m_sizeOfField + m_numberOfRows));
-}
-
 int Grid::getClickedRowIdx(const QPoint &point)
 {
     if (!isInGrid(point))
@@ -81,4 +73,42 @@ int Grid::getClickedColIdx(const QPoint &point)
 
     // integer division
     return (point.x() - m_padding - 2) / (m_sizeOfField + 1);
+}
+
+void Grid::paintMove(int row, int col, bool move)
+{
+    if (move == 0)
+        paintCircle(row, col);
+    if (move == 1)
+        paintCross(row, col);
+}
+
+bool Grid::isInGrid(const QPoint &point)
+{
+    int x = point.x();
+    int y = point.y();
+
+    return (x > (m_padding + 1)) && (x < (m_padding + m_numberOfCols * m_sizeOfField + m_numberOfCols))
+            && (y > (m_padding + 1)) && (y < (m_padding + m_numberOfRows * m_sizeOfField + m_numberOfRows));
+}
+
+void Grid::paintCircle(int row, int col)
+{
+    QRect rect = getInnerRect(row, col);
+    m_scene->addEllipse(rect.left(), rect.top(),rect.width(), rect.height(), QPen(Qt::red), Qt::NoBrush);
+}
+
+void Grid::paintCross(int row, int col)
+{
+    QRect rect = getInnerRect(row, col);
+    m_scene->addLine(rect.left(), rect.top(), rect.right(), rect.bottom());
+    m_scene->addLine(rect.left(), rect.bottom(), rect.right(), rect.top());
+}
+
+QRect Grid::getInnerRect(int row, int col)
+{
+    int x = m_padding + col * m_sizeOfField + col + m_innerPadding;
+    int y = m_padding + row * m_sizeOfField + row + m_innerPadding;
+    int size = m_sizeOfField - 2 * m_innerPadding;
+    return QRect(x, y, size, size);
 }

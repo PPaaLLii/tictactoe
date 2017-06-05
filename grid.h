@@ -7,16 +7,8 @@
 
 class Grid : public QGraphicsRectItem
 {
-private:
-    int m_numberOfRows;
-    int m_numberOfCols;
-    int m_sizeOfField;
-    int m_padding;
-    QGraphicsScene* m_scene;
-
 public:
-
-    void init(int numberOfRows, int numberOfCols, int sizeOfField, int padding, QGraphicsScene* scene);
+    void init(int numberOfRows, int numberOfCols, int sizeOfField, int padding, int innerPadding, QGraphicsScene* scene);
 
     int getWidth();
 
@@ -24,11 +16,27 @@ public:
 
     void paint();
 
-    bool isInGrid(const QPoint &point);
-
     int getClickedRowIdx(const QPoint &point);
 
     int getClickedColIdx(const QPoint &point);
+
+    void paintMove(int row, int col, bool move);
+
+private:
+    int m_numberOfRows;
+    int m_numberOfCols;
+    int m_sizeOfField;
+    int m_padding;
+    int m_innerPadding;
+    QGraphicsScene* m_scene;
+
+    bool isInGrid(const QPoint &point);
+
+    void paintCircle(int row, int col);
+
+    void paintCross(int row, int col);
+
+    QRect getInnerRect(int row, int col);
 };
 
 #endif // GRID_H
