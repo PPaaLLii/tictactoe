@@ -67,3 +67,18 @@ int Grid::getClickedRowIdx(const QPoint &point)
     // integer division
     return (point.y() - m_padding - 2) / (m_sizeOfField + 1);
 }
+
+int Grid::getClickedColIdx(const QPoint &point)
+{
+    if (!isInGrid(point))
+        return -1;
+
+    if ((point.x() - m_padding - 1) % (m_sizeOfField + 1) == 0)
+    {
+        qDebug() << "vertical line";
+        return -1;
+    }
+
+    // integer division
+    return (point.x() - m_padding - 2) / (m_sizeOfField + 1);
+}

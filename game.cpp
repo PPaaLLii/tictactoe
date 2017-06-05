@@ -28,7 +28,8 @@ Game::Game()
 void Game::mousePressEvent(QMouseEvent *event)
 {
     qDebug() << event->pos();
-    qDebug() << m_grid.getClickedRowIdx(event->pos());
+    qDebug() << "row " << m_grid.getClickedRowIdx(event->pos());
+    qDebug() << "col " << m_grid.getClickedColIdx(event->pos());
 }
 
 int Game::calculateWindowSize(int numberOfFields, int sizeOfField, int padding)
